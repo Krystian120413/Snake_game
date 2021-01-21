@@ -26,8 +26,16 @@ const move = (x, y) => {
     //background
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, 600,  600);
+    
 
     for(let i = 0; i < snake.length; i++){
+        let xs = snake[i].x;
+        let ys = snake[i].y;
+        if(i > 0){
+            snake[i-1].x = xs;
+            snake[i-1].y = ys;
+        }
+
         snake[i].y += y;
         snake[i].x += x;
         if(snake[i].y >= 600) snake[i].y = 0;
@@ -39,6 +47,9 @@ const move = (x, y) => {
         ctx.fillStyle = '#fff';
         ctx.fillRect(snake[i].x, snake[i].y, 20, 20);
         console.log(snake[i].x, snake[i].y);
+
+        
+
     }
 
     clearTimeout(timer);
