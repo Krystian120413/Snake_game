@@ -4,6 +4,8 @@ let positionX = 0;
 let positionY = 0;
 let timer;
 let snake = [
+    {x:80, y:0},
+    {x: 60, y:0},
     {x: 40, y: 0},
     {x: 20, y: 0},
     {x: 0, y: 0}
@@ -17,7 +19,7 @@ const start = () => {
     //first rectangle
     ctx.fillStyle = '#fff';
     for(let i = 0; i < snake.length; i++){
-        ctx.fillRect(snake[i].x, snake[i].y, 20, 20);
+        ctx.fillRect(snake[i].x, snake[i].y, 19, 19);
         console.log(snake[i].x, snake[i].y);
     }
 }
@@ -29,13 +31,10 @@ const move = (x, y) => {
     
 
     for(let i = 0; i < snake.length; i++){
-        let xs = snake[i].x;
-        let ys = snake[i].y;
         if(i > 0){
-            snake[i-1].x = xs;
-            snake[i-1].y = ys;
+            snake[i-1].x = snake[i].x;
+            snake[i-1].y = snake[i].y;
         }
-
         snake[i].y += y;
         snake[i].x += x;
         if(snake[i].y >= 600) snake[i].y = 0;
@@ -45,7 +44,7 @@ const move = (x, y) => {
 
         //first rectangle
         ctx.fillStyle = '#fff';
-        ctx.fillRect(snake[i].x, snake[i].y, 20, 20);
+        ctx.fillRect(snake[i].x, snake[i].y, 19, 19);
         console.log(snake[i].x, snake[i].y);
 
         
@@ -58,7 +57,7 @@ const move = (x, y) => {
 
 //start
 start();
-move(0, 0);
+move(20, 0);
 
 //moving
 const moving = (e) => {
