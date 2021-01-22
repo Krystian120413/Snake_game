@@ -78,6 +78,10 @@ const move = () => {
         snake.push({x: snake[snake.length - 1].x, y: snake[snake.length - 1].y})
         score++;
         document.getElementById("score").innerHTML = "Score: " + score;
+        if(score === 897){
+            alert("Wygrana. Twój wynik to: " + score);
+            window.location.reload(true);
+        }
     }
 
     console.log(collision());
