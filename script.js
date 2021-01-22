@@ -6,6 +6,7 @@ let timer = null;
 let snake = [];
 let apple = [];
 let direction = 4;
+let score = 0;
 
 function draw() {
     ctx.fillStyle = "#000000";
@@ -28,13 +29,38 @@ const start = () => {
     snake.push({ x: 0, y: 0 });
 
     draw();
+    setInterval("move()", 200);
 }
 
-const move = (x, y) => {
+const move = () => {
     // move parts
     for(let i = snake.length - 1; i > 0; i--){
         snake[i].x = snake[i - 1].x;
         snake[i].y = snake[i - 1].y;
+    }
+
+    let x, y;
+    switch(direction){
+        case 1: {
+            x = 0;
+            y = partSize;
+            break;
+        }
+        case 2: {
+            x = 0;
+            y = -partSize;
+            break;
+        }
+        case 3: {
+            x = -partSize;
+            y = 0;
+            break;
+        }
+        case 4: {
+            x = partSize;
+            y = 0;
+            break;
+        }
     }
 
     // move head
@@ -50,9 +76,25 @@ const move = (x, y) => {
     if(snake[0].x === apple[0] && snake[0].y === apple[1]){
         fruit();
         snake.push({x: snake[snake.length - 1].x, y: snake[snake.length - 1].y})
+        score++;
+        document.getElementById("score").innerHTML = "Score: " + score;
     }
 
-    draw();
+    console.log(collision());
+
+    if(collision()){
+        alert("Przegrana. Twój wynik to: " + score);
+        window.location.reload(true);
+    }
+    else draw();
+}
+
+const collision = () => {
+    for(let e = 1; e < snake.length; e++){
+        if(snake[e].x === snake[0].x && snake[e].y === snake[0].y){
+            return true;
+        }
+    }
 }
 
 const fruit = () => {
@@ -71,29 +113,19 @@ const moving = (e) => {
     //down
     if(e.code === 'KeyS' && direction != 2){
         direction = 1;
-        clearInterval(timer);
-        timer = setInterval("move(0, " + partSize + ")", 300);
     }
     //up
     else if(e.code === 'KeyW' && direction != 1){
         direction = 2;
-        clearInterval(timer);
-        timer = setInterval("move(0, " + -partSize + ")", 300);
     }
     //left
     else if(e.code === 'KeyA' && direction != 4) {
         direction = 3;
-        clearInterval(timer);
-        timer = setInterval("move(" + -partSize + ", 0)", 300);
     }
     //right
     else if(e.code === 'KeyD' && direction != 3) {
         direction = 4;
-        clearInterval(timer);
-        timer = setInterval("move(" + partSize + ", 0)", 300);
     }
-    
-    console.log(e.code);
 }
 
 document.addEventListener('keypress', moving);
