@@ -8,7 +8,7 @@ let apple = [];
 let direction = 4;
 let score = 0;
 
-function draw() {
+const draw = () => {
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
